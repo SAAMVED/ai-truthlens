@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Home, BarChart3, AlertTriangle, CheckCircle } from 'lucide-react';
+import { BarChart3, AlertTriangle, CheckCircle, Search, TrendingUp, Zap } from 'lucide-react';
 
 export default function Dashboard() {
   const [history, setHistory] = useState([]);
@@ -22,133 +22,191 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  // Compute Analytics
   const totalQueries = history.length;
-  
   let gpt4Hallucinations = 0;
   let geminiHallucinations = 0;
   let totalTags = 0;
 
   history.forEach(session => {
-    const tags = session.hallucinationTags || {};
-    // Add up the length of the tag array for each model
-    if (tags.gpt4) {
-        gpt4Hallucinations += tags.gpt4.length;
-        totalTags += tags.gpt4.length;
-    }
-    if (tags.gemini) {
-        geminiHallucinations += tags.gemini.length;
-        totalTags += tags.gemini.length;
-    }
+    const t = session.hallucinationTags || {};
+    if (t.gpt4)   { gpt4Hallucinations += t.gpt4.length;   totalTags += t.gpt4.length; }
+    if (t.gemini) { geminiHallucinations += t.gemini.length; totalTags += t.gemini.length; }
   });
 
   return (
-    <main className="min-h-screen p-8 bg-gray-50 text-gray-900 font-sans pb-24">
-      <div className="max-w-5xl mx-auto flex flex-col gap-8">
-        
-        {/* HEADER */}
-        <header className="flex items-center justify-between py-6">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-indigo-700 flex items-center gap-3">
-              <BarChart3 className="w-8 h-8"/> Analytics Dashboard
-            </h1>
-            <p className="text-gray-600 mt-2">Track AI model reliability over time.</p>
-          </div>
-          
-          <Link href="/" className="bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-colors shadow-sm">
-            <Home className="w-5 h-5"/>
-            Back to Playground
-          </Link>
-        </header>
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
 
-        {loading ? (
-          <div className="text-center py-20 text-gray-500 font-medium animate-pulse">
-            Loading Dashboard Data...
-          </div>
-        ) : (
-          <>
-            {/* STATS CARDS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-                <CheckCircle className="w-10 h-10 text-green-500 mb-3"/>
-                <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">Total Sessions</p>
-                <h3 className="text-4xl font-extrabold text-gray-900 mt-1">{totalQueries}</h3>
-              </div>
+      {/* SIDEBAR */}
+      <aside style={{
+        width: '220px', flexShrink: 0,
+        background: 'var(--bg-secondary)',
+        borderRight: '1px solid var(--border-subtle)',
+        display: 'flex', flexDirection: 'column',
+        padding: '24px 16px', gap: '8px',
+        position: 'sticky', top: 0, height: '100vh', overflowY: 'auto',
+      }}>
+        <div style={{ marginBottom: '28px', paddingLeft: '8px' }}>
+          <h1 style={{
+            fontSize: '18px', fontWeight: 800, letterSpacing: '-0.3px',
+            background: 'linear-gradient(135deg, #818cf8, #a78bfa)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          }}>AI TruthLens</h1>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>Hallucination Detector</p>
+        </div>
 
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center border-t-4 border-t-indigo-500">
-                <Bot className="w-10 h-10 text-indigo-500 mb-3"/>
-                <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">GPT-4o Errors</p>
-                <h3 className="text-4xl font-extrabold text-gray-900 mt-1">{gpt4Hallucinations}</h3>
-                <p className="text-xs text-gray-400 mt-2">Total flagged hallucinations</p>
-              </div>
+        <Link href="/" className="nav-link">
+          <Search style={{ width: 16, height: 16 }} /> Playground
+        </Link>
+        <Link href="/dashboard" className="nav-link active">
+          <BarChart3 style={{ width: 16, height: 16 }} /> Dashboard
+        </Link>
 
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center border-t-4 border-t-indigo-500">
-                <BrainCircuit className="w-10 h-10 text-indigo-500 mb-3"/>
-                <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">Gemini Errors</p>
-                <h3 className="text-4xl font-extrabold text-gray-900 mt-1">{geminiHallucinations}</h3>
-                <p className="text-xs text-gray-400 mt-2">Total flagged hallucinations</p>
-              </div>
+        <div style={{ flexGrow: 1 }} />
+        <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-subtle)' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', paddingLeft: '8px' }}>JSON Storage</p>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', paddingLeft: '8px', marginTop: 2 }}>Raw Data</p>
+        </div>
+      </aside>
 
+      {/* MAIN */}
+      <main style={{ flex: 1, padding: '40px 40px 80px', overflowY: 'auto' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+
+          {/* HEADER */}
+          <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h1 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <BarChart3 style={{ width: 28, height: 28, color: '#818cf8' }} /> Analytics Dashboard
+              </h1>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Track AI model reliability over time.</p>
             </div>
+            <Link href="/" style={{
+              display: 'flex', alignItems: 'center', gap: '8px',
+              padding: '10px 18px', borderRadius: '12px', fontWeight: 600, fontSize: '14px',
+              background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)',
+              color: '#818cf8', textDecoration: 'none', transition: 'all 0.2s',
+            }}>
+              <Search style={{ width: 16, height: 16 }} /> Back to Playground
+            </Link>
+          </header>
 
-            {/* ERROR LOG TABLE */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mt-4">
-              <div className="p-6 border-b border-gray-100 bg-gray-50">
-                <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-gray-500" /> Recent Validations
-                </h2>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text-muted)' }} className="animate-pulse-glow">
+              Loading Dashboard Data…
+            </div>
+          ) : (
+            <>
+              {/* STAT CARDS */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+                <StatCard
+                  icon={<CheckCircle style={{ width: 28, height: 28, color: '#10b981' }} />}
+                  label="Total Sessions"
+                  value={totalQueries}
+                  color="#10b981"
+                />
+                <StatCard
+                  icon={<Zap style={{ width: 28, height: 28, color: '#4f46e5' }} />}
+                  label="GPT-4o Errors"
+                  value={gpt4Hallucinations}
+                  sub="Total flagged hallucinations"
+                  color="#4f46e5"
+                />
+                <StatCard
+                  icon={<TrendingUp style={{ width: 28, height: 28, color: '#8b5cf6' }} />}
+                  label="Gemini Errors"
+                  value={geminiHallucinations}
+                  sub="Total flagged hallucinations"
+                  color="#8b5cf6"
+                />
               </div>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 text-sm uppercase">
-                    <tr>
-                      <th className="px-6 py-4 font-semibold">Question</th>
-                      <th className="px-6 py-4 font-semibold">Validation Method</th>
-                      <th className="px-6 py-4 font-semibold">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {history.length === 0 ? (
-                      <tr>
-                        <td colSpan="3" className="px-6 py-8 text-center text-gray-400 font-medium">
-                          No sessions recorded yet! Go ask a question in the Playground.
-                        </td>
+
+              {/* HISTORY TABLE */}
+              <div className="glass-card" style={{ overflow: 'hidden' }}>
+                <div style={{
+                  padding: '18px 24px',
+                  borderBottom: '1px solid var(--border-subtle)',
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                }}>
+                  <AlertTriangle style={{ width: 17, height: 17, color: 'var(--text-muted)' }} />
+                  <h2 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    Recent Validations
+                  </h2>
+                </div>
+
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                    <thead>
+                      <tr style={{ background: 'rgba(255,255,255,0.03)' }}>
+                        {['Question', 'Validation Method', 'Date'].map(h => (
+                          <th key={h} style={{
+                            padding: '12px 24px', textAlign: 'left',
+                            fontWeight: 700, textTransform: 'uppercase',
+                            fontSize: '11px', letterSpacing: '0.08em',
+                            color: 'var(--text-muted)',
+                            borderBottom: '1px solid var(--border-subtle)',
+                          }}>{h}</th>
+                        ))}
                       </tr>
-                    ) : (
-                      history.slice().reverse().map(session => (
-                        <tr key={session.id} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-6 py-4 text-gray-900 font-medium">
-                            {session.question}
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="inline-block bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold border border-indigo-200">
-                              {session.validation}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-gray-500 text-sm">
-                            {new Date(session.timestamp).toLocaleDateString()}
+                    </thead>
+                    <tbody>
+                      {history.length === 0 ? (
+                        <tr>
+                          <td colSpan={3} style={{ padding: '48px 24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                            No sessions recorded yet! Go ask a question in the Playground.
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : (
+                        history.slice().reverse().map(session => (
+                          <tr key={session.id} style={{ borderBottom: '1px solid var(--border-subtle)', transition: 'background 0.15s' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.06)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                          >
+                            <td style={{ padding: '14px 24px', color: 'var(--text-primary)', fontWeight: 500 }}>
+                              {session.question}
+                            </td>
+                            <td style={{ padding: '14px 24px' }}>
+                              <span style={{
+                                display: 'inline-block',
+                                background: 'rgba(79,70,229,0.15)',
+                                color: '#818cf8',
+                                border: '1px solid rgba(99,102,241,0.3)',
+                                padding: '3px 12px', borderRadius: '999px',
+                                fontSize: '12px', fontWeight: 700,
+                              }}>
+                                {session.validation}
+                              </span>
+                            </td>
+                            <td style={{ padding: '14px 24px', color: 'var(--text-muted)' }}>
+                              {new Date(session.timestamp).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-
-          </>
-        )}
-      </div>
-    </main>
+            </>
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
 
-// Small icon components to avoid having to pass props inside the page component 
-function Bot(props) {
-  return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>;
-}
-function BrainCircuit(props) {
-  return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M9 13a4.5 4.5 0 0 0 3-4"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M6 18a4 4 0 0 1-1.968-3.036"/><path d="M12 18a4 4 0 0 0 4.243-2.925 4 4 0 0 0 4.243-2.925A4 4 0 1 0 12 5Z"/><path d="M12 5a4.5 4.5 0 0 0-3 4"/><path d="M17.997 5.125A3 3 0 0 1 17.599 6.5"/><path d="M20.523 10.896a4 4 0 0 0-.585-.396"/><path d="M18 18a4 4 0 0 0 1.968-3.036"/></svg>;
+function StatCard({ icon, label, value, sub, color }) {
+  return (
+    <div className="glass-card" style={{
+      padding: '24px',
+      borderTop: `3px solid ${color}`,
+      display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '8px',
+    }}>
+      {icon}
+      <p style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)' }}>
+        {label}
+      </p>
+      <h3 style={{ fontSize: '40px', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>{value}</h3>
+      {sub && <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{sub}</p>}
+    </div>
+  );
 }
