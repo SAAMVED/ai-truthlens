@@ -1,1 +1,194 @@
-[]
+[
+  {
+    "id": "1776836823935",
+    "timestamp": "2026-04-22T05:47:03.935Z",
+    "question": "who is the sunny pandey",
+    "modelsQueried": [
+      "gpt4",
+      "gemini",
+      "claude"
+    ],
+    "responses": {
+      "claude": "This is a mock response from Claude 3.5 Sonnet regarding: \"who is the sunny pandey\". It balances conciseness with depth. Green tea is known for its high concentration of polyphenols, which may reduce inflammation and help fight cancer.",
+      "gemini": "This is a mock response from Gemini 1.5 Pro regarding: \"who is the sunny pandey\". It tends to be conversational and detailed. Yes, drinking green tea is great! It contains antioxidants called catechins which are good for your body.",
+      "gpt4": "This is a mock response from GPT-4o regarding: \"who is the sunny pandey\". It focuses on structured reasoning and factual delivery. The health benefits of green tea include improved brain function and fat loss."
+    },
+    "latencies": {
+      "claude": 1022,
+      "gemini": 1352,
+      "gpt4": 1465
+    },
+    "hallucinationTags": {
+      "claude": [],
+      "gemini": [
+        "Unsupported Claims"
+      ],
+      "gpt4": []
+    },
+    "validation": "Cross-Model Comparison",
+    "observation": "",
+    "analysisResults": {
+      "claude": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      },
+      "gemini": {
+        "tags": [
+          "Unsupported Claims"
+        ],
+        "reasoning": "Heuristic analysis detected potential issues: Unsupported Claims. Add a GEMINI_API_KEY to .env.local for AI-powered analysis.",
+        "source": "heuristic"
+      },
+      "gpt4": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      }
+    }
+  },
+  {
+    "id": "1776837619503",
+    "timestamp": "2026-04-22T06:00:19.503Z",
+    "question": "who is the better sunny or sunny pandey",
+    "modelsQueried": [
+      "gpt4",
+      "gemini",
+      "claude"
+    ],
+    "responses": {
+      "gemini": "This is a mock response from Gemini 1.5 Pro regarding: \"who is the better sunny or sunny pandey\". It tends to be conversational and detailed. Yes, drinking green tea is great! It contains antioxidants called catechins which are good for your body.",
+      "claude": "This is a mock response from Claude 3.5 Sonnet regarding: \"who is the better sunny or sunny pandey\". It balances conciseness with depth. Green tea is known for its high concentration of polyphenols, which may reduce inflammation and help fight cancer.",
+      "gpt4": "This is a mock response from GPT-4o regarding: \"who is the better sunny or sunny pandey\". It focuses on structured reasoning and factual delivery. The health benefits of green tea include improved brain function and fat loss."
+    },
+    "latencies": {
+      "gemini": 1034,
+      "claude": 1662,
+      "gpt4": 2021
+    },
+    "hallucinationTags": {
+      "gemini": [
+        "Unsupported Claims"
+      ],
+      "claude": [],
+      "gpt4": []
+    },
+    "validation": "Cross-Model Comparison",
+    "observation": "",
+    "analysisResults": {
+      "gemini": {
+        "tags": [
+          "Unsupported Claims"
+        ],
+        "reasoning": "Heuristic analysis detected potential issues: Unsupported Claims. Add a GEMINI_API_KEY to .env.local for AI-powered analysis.",
+        "source": "heuristic"
+      },
+      "claude": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      },
+      "gpt4": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      }
+    }
+  },
+  {
+    "id": "1776837664762",
+    "timestamp": "2026-04-22T06:01:04.762Z",
+    "question": "who is the better apple",
+    "modelsQueried": [
+      "gpt4",
+      "gemini",
+      "claude"
+    ],
+    "responses": {
+      "gemini": "This is a mock response from Gemini 1.5 Pro regarding: \"who is the better apple\". It tends to be conversational and detailed. Yes, drinking green tea is great! It contains antioxidants called catechins which are good for your body.",
+      "gpt4": "This is a mock response from GPT-4o regarding: \"who is the better apple\". It focuses on structured reasoning and factual delivery. The health benefits of green tea include improved brain function and fat loss.",
+      "claude": "This is a mock response from Claude 3.5 Sonnet regarding: \"who is the better apple\". It balances conciseness with depth. Green tea is known for its high concentration of polyphenols, which may reduce inflammation and help fight cancer."
+    },
+    "latencies": {
+      "gemini": 941,
+      "gpt4": 1240,
+      "claude": 1904
+    },
+    "hallucinationTags": {
+      "gemini": [
+        "Unsupported Claims"
+      ],
+      "gpt4": [],
+      "claude": []
+    },
+    "validation": "Logical Reasoning",
+    "observation": "",
+    "analysisResults": {
+      "gemini": {
+        "tags": [
+          "Unsupported Claims"
+        ],
+        "reasoning": "Heuristic analysis detected potential issues: Unsupported Claims. Add a GEMINI_API_KEY to .env.local for AI-powered analysis.",
+        "source": "heuristic"
+      },
+      "gpt4": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      },
+      "claude": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      }
+    }
+  },
+  {
+    "id": "1776841151567",
+    "timestamp": "2026-04-22T06:59:11.568Z",
+    "question": "who is the sunny pandey",
+    "modelsQueried": [
+      "gpt4",
+      "gemini",
+      "claude"
+    ],
+    "responses": {
+      "gemini": "This is a mock response from Gemini 1.5 Pro regarding: \"who is the sunny pandey\". It tends to be conversational and detailed. Yes, drinking green tea is great! It contains antioxidants called catechins which are good for your body.",
+      "claude": "This is a mock response from Claude 3.5 Sonnet regarding: \"who is the sunny pandey\". It balances conciseness with depth. Green tea is known for its high concentration of polyphenols, which may reduce inflammation and help fight cancer.",
+      "gpt4": "This is a mock response from GPT-4o regarding: \"who is the sunny pandey\". It focuses on structured reasoning and factual delivery. The health benefits of green tea include improved brain function and fat loss."
+    },
+    "latencies": {
+      "gemini": 1052,
+      "claude": 1492,
+      "gpt4": 1831
+    },
+    "hallucinationTags": {
+      "gemini": [
+        "Unsupported Claims"
+      ],
+      "claude": [],
+      "gpt4": []
+    },
+    "validation": "Cross-Model Comparison",
+    "observation": "",
+    "analysisResults": {
+      "gemini": {
+        "tags": [
+          "Unsupported Claims"
+        ],
+        "reasoning": "Heuristic analysis detected potential issues: Unsupported Claims. Add a GEMINI_API_KEY to .env.local for AI-powered analysis.",
+        "source": "heuristic"
+      },
+      "claude": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      },
+      "gpt4": {
+        "tags": [],
+        "reasoning": "No obvious hallucination patterns detected via heuristics. Add a GEMINI_API_KEY for deeper analysis.",
+        "source": "heuristic"
+      }
+    }
+  }
+]
