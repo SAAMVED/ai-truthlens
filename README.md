@@ -34,7 +34,7 @@
    npm run dev
    ```
 
-4. Open your browser to http://localhost:3001/.
+4. Open your browser to http://localhost:3000 .
 5. Enter a question to trigger the AI mock responses.
 6. Checkmark tags to report hallucinations, select an evaluation method, and save to your Dashboard!
 
